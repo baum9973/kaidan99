@@ -42,13 +42,16 @@
             bun = localStorage.getItem('after')
             preview_text.value = localStorage.getItem('genbun')
             after.value = bun
+            if(localStorage.getItem('kakutei')=='true'){
+                preview_text.readOnly = true
+            }
         }
         button_genbun.addEventListener('click',e=>{
             preview_text.readOnly = true
             after.value = preview_text.value
             bun = after.value
             localStorage.setItem('kakutei',true)
-            localStorage.setItem('bun',preview_text.value)
+            localStorage.setItem('genbun',preview_text.value)
             localStorage.setItem('after',after.value)
         })
         button_word.addEventListener('click',e=>{
