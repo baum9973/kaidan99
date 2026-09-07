@@ -3,9 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rhythm Game</title>
+    <title>怪談白KP用</title>
+    <style>
+    </style>
 </head>
 <body>
-    <h1>わ</h1>
+    <div style="display:flex;">
+        <button id="allreset">全てリセット</button>
+        <div width="30%" style="padding: 1%;">
+            <p>原文</p>
+            <p>このボタンを押したら原文を確定します</p>
+            <p>(変更不可になる)</p>
+            <button id="button_genbun">確定</button>
+            <p></p>
+            <textarea name="preview" id="preview_text"></textarea>
+        </div>
+        <div width="30%" style="padding: 1%;">
+            <p>動詞など、細かな変更は手作業をおすすめします。</p>
+            <p>変更する単語</p>
+            <input type="text" id="before_text">
+            <p>変更後の単語</p>
+            <input type="text" id="after_text">
+            <button id="button_word">単語を変更</button>
+        </div>
+        <div width="30%" style="padding: 1%;">
+            <p>改変後</p>
+            <p>ここを編集もできます。</p>
+            <textarea name="after" id="after"></textarea>
+        </div>
+    </div>
+    <script>
+        let bun=''
+        if(localStorage.getItem('kakutei')===null){
+            localStorage.setItem('kakutei',false)
+            localStorage.setItem('genbun','')
+            localStorage.setItem('after','')
+        }else{
+            bun = localStorage.getItem('after')
+        }
+        button_genbun.addEventListener('click',e=>{
+            preview_text.readOnly = true
+            after.value = preview_text.value
+            bun = after.value
+            localStorage.setItem('kakutei',true)
+            localStorage.setItem('bun',preview_text.value)
+            localStorage.setItem('after',after.value)
+        })
+        button_word.addEventListener('click',e=>{
+            if(before_text.value=='' || after_text.value==''){
+                alert('変更前と変更後の単語を入力してください。')
+            }else{
+                bun = bun.replaceAll(before_text.value,after_text.value)
+                after.value = bun
+                localStorage.setItem('after',after.value)
+            }
+        })
+        after.addEventListener('input',e=>{
+            bun = after.value
+        })
+        reset.addEventListener('click',e=>{
+            localStorage.setItem('kakutei',false)
+            localStorage.setItem('genbun','')
+            localStorage.setItem('after','')  
+        })
+    </script>
 </body>
 </html>
